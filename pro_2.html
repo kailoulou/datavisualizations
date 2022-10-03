@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<!--Import all of the necessary files here so that the thing can actually work-->
+<head>
+    <script type="text/javascript" src="d3.v4.min.js"></script>
+</head>
+
+<!--The actual body of the page-->
+<body style ="margin:0px;">
+    <div>
+        <!--The top part of the webpage itself including the menu and all of that good stuff--> 
+        <h1 style="color:white; background-color: black; padding: 40px; margin: 0px;"><center>Kai's Analytics Webpage</center></h1>
+    </div>
+
+
+    <div style = "float:left; margin-left: 10px;">
+        <br>
+        <!--File Input-->
+        <label for="myFile">Input file:</label>
+        <input type="file"
+                id = "myFile" name ="fileupload"
+                accept = ".csv">
+        <br>
+
+        <!--Choose Histogram-->
+        <label for="HistCheck">Choose Histogram</label>
+        <input type ="radio" name = "myRad" id = "HistCheck" value="radio" onclick="executeHistogram()">
+        <!--The execute histogram draws the histogram itself on the right hand side of the page-->
+
+        <script>
+            //The execute histogram draws the histogram itself on the right hand side of the page
+            function initalizeSVG(myVal){
+                d3.select("svg").remove();
+                if (myVal==1){
+                    executeHistogram();
+                }else{
+                    executeScatterPlot();
+                }
+            }
+            function executeHistogram(){
+                d3.csv("cities.csv", function(incomingData){
+                var maxPopulation = d3.max(incomingData, d => parseInt(d.population))
+                var yScale = d3.scaleLinear().domain([0,maxPopulation]).range([0,460]);
+                d3.select("svg").attr("style","height: 480px; width: 600px;");
+                d3.select("svg")
+                .selectAll("rect")
+                .data(incomingData)
+                .enter()
+                .append("rect")
+                .attr("width", 50)
+                .attr("height", d => yScale(parseInt(d.population)))
+                .attr("x", (d,i) => i * 60)
+                .attr("y", d => 480 - yScale(parseInt(d.population)))
+                .style("fill", "#FE9922")
+                .style("stroke", "#9A8B7A")
+                .style("stroke-width", "1px")})
+            };
+            //Draws the scatter plot
+            function executeScatterPlot(){
+                d3.csv("cities.csv", function(incomingData){
+                var maxPopulation = d3.max(incomingData, d => parseInt(d.population))
+                var startEnd = d3.extent(incomingData, d => d.population);
+                var timeRamp = d3.scaleTime().domain(startEnd).range([20,480]);
+                var yScale = d3.scaleLinear().domain([0,maxPopulation]).range([0,460]);
+                var radiusScale = d3.scaleLinear().domain([0,maxPopulation]).range([1,20]);
+                var colorScale = d3.scaleLinear().domain([0,maxPopulation]).range(["white","#75739F"]); 
+                //This creates the actual svg
+                d3.select("svg").attr("style","height: 480px; width: 600px;");
+                d3.select("svg")
+                    .selectAll("circle")
+                    .data(incomingData)
+                    .enter()
+                    .append("circle")
+                    .attr("r", d => radiusScale(d.population))
+                    .attr("cx",(d,i) => i * 60)
+                    .attr("cy", d => 480 - yScale(parseInt(d.population)))
+                    .style("fill", d => colorScale(d.maxPopulation))
+                    .style("stroke", "black")
+                    .style("stroke-width", "1px");
+                })
+            };
+        </script>
+
+        <br>
+         <!--Choose Scatterplot-->
+         <label for="ScatCheck">Choose Scatterplot</label>
+         <input type ="radio" name = "myRad" id = "HistCheck" value="radio" onclick="executeScatterPlot()">
+    </div>
+
+    <!--All the nice and purdy shapes-->
+    <div style="float: right; margin-top:20px;">
+        <svg id = "SVGCanvas" position: right; width="900" height="900";></svg>
+    </div>
+
+     <!--Line demarcating the partition of the page-->
+     <div style = "float:left; margin-left: 20px;">
+        <svg position: left; width = "20"; height = "900"; id = "SVGLine">
+            <line x1 = "20" y1="0" x2="20" y2="900" style = "stroke:black;stroke-width:1"/>
+        </svg>
+    </div>
+
+    
+</body>
+</html>

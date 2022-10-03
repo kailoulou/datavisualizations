@@ -1,0 +1,34 @@
+This is what you need to do in order to begin creating and testing your code. Please note that this currently works on Windows computers, I don't know about Macs which means paths and folder hierarchy will be different. With that in mind, the principles will be the same
+
+1: Download XAMPP
+2: Save XAMPP to your local disk
+3: Run the .exe file
+4: Navigate to the root folder for XAMPP (The place you chose to download XAMPP to)
+5: Click on "htdocs"
+6: Copy your current project folder and make a local copy there. Or just make a new folder titled however you want. HOWEVER AVOID SPACES
+7: Great! Now you have the folder! Now go back to your XAMPP GUI
+8: Initialize Apache, FileZilla, and Mercury and grant them admin priveleges (screw your antivirus)
+9: When launching your file, go to your browser of choice (doesnt matter with this project, very low level stuff)
+10: Place the following address in your search bar: 
+https://localhost/(PROJECT FOLDER NAME)/(PROJECT FILE NAME HERE)
+
+
+ADDITIONAL NOTES:
+This code is currently slightly incomplete, still need to revise the SVGs and replace them when the user selects another button. 
+If you include a space in your file name, you will need to type %20 to represent that space
+
+Kitty kat
+ \`*-.                    
+        )  _`-.                 
+       .  : `. .                
+       : _   '  \               
+       ; *` _.   `*-._          
+       `-.-'          `-.       
+         ;       `       `.     
+         :.       .        \    
+         . \  .   :   .-'   .   
+         '  `+.;  ;  '      :   
+         :  '  |    ;       ;-. 
+         ; '   : :`-:     _.`* ;
+[bug] .*' /  .*' ; .*`- +'  `*' 
+      `*-*   `*-*  `*-*'
